@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<base target="_top">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal Human Capital · Setjen DPR RI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0e17;
+  --bg-2:#0d1420;
+  --surface:#121a2b;
+  --surface-2:#182338;
+  --line:rgba(148,178,224,0.14);
+  --line-soft:rgba(148,178,224,0.07);
+  --cyan:#3fd6ff;
+  --cyan-dim:#1ea7c9;
+  --violet:#8b7bff;
+  --green:#3ee6a8;
+  --text:#e7edf7;
+  --text-dim:#7c8aa8;
+  --text-dimmer:#4f5d78;
+  --font-display:'Space Grotesk', sans-serif;
+  --font-body:'Inter', sans-serif;
+  --font-mono:'JetBrains Mono', monospace;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html,body{height:100%;}
+body{
+  font-family:var(--font-body);
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+::selection{ background:var(--cyan); color:var(--bg); }
+
+/* ---- background grid + glow ---- */
+.bg-grid{
+  position:fixed; inset:0; pointer-events:none; z-index:0;
+  background-image:
+    linear-gradient(var(--line-soft) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+  background-size:56px 56px;
+  mask-image:radial-gradient(ellipse 900px 600px at 50% 0%, black 40%, transparent 85%);
+}
+.bg-glow{
+  position:fixed; inset:0; pointer-events:none; z-index:0;
+  background:
+    radial-gradient(700px 420px at 15% 0%, rgba(63,214,255,0.14), transparent 60%),
+    radial-gradient(700px 420px at 90% 15%, rgba(139,123,255,0.12), transparent 60%),
+    radial-gradient(600px 400px at 50% 100%, rgba(62,230,168,0.08), transparent 60%);
+}
+
+.wrap{ position:relative; z-index:1; min-height:100vh; display:flex; flex-direction:column; }
+
+/* ---- topbar ---- */
+.topbar{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:20px 40px; border-bottom:1px solid var(--line);
+}
+.brand{ display:flex; align-items:center; gap:12px; }
+.brand-mark{
+  width:36px; height:36px; border-radius:9px;
+  background:var(--surface-2); border:1px solid var(--line);
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-mono); font-weight:700; font-size:12px;
+  color:var(--cyan); position:relative;
+}
+.brand-mark::after{
+  content:''; position:absolute; inset:-1px; border-radius:9px;
+  box-shadow:0 0 14px rgba(63,214,255,0.35); opacity:0.6;
+}
+.brand-text .eyebrow{
+  font-family:var(--font-mono); font-size:10px; letter-spacing:2px;
+  text-transform:uppercase; color:var(--text-dim);
+}
+.brand-text h1{
+  font-family:var(--font-display); font-weight:600; font-size:16px;
+  color:var(--text); letter-spacing:0.2px;
+}
+.status-pill{
+  display:flex; align-items:center; gap:8px;
+  font-family:var(--font-mono); font-size:11px; letter-spacing:1px;
+  color:var(--text-dim); border:1px solid var(--line); padding:7px 14px; border-radius:999px;
+}
+.status-pill .blip{
+  width:7px; height:7px; border-radius:50%; background:var(--green);
+  box-shadow:0 0 8px var(--green); animation:blip 1.8s ease-in-out infinite;
+}
+@keyframes blip{ 0%,100%{opacity:1;} 50%{opacity:0.35;} }
+
+/* ---- hero ---- */
+.hero{
+  text-align:center; max-width:760px; margin:0 auto; padding:72px 24px 16px; position:relative;
+}
+.hero .eyebrow{
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:var(--font-mono); font-size:11px; letter-spacing:2.5px;
+  text-transform:uppercase; color:var(--cyan);
+  border:1px solid rgba(63,214,255,0.3); background:rgba(63,214,255,0.06);
+  padding:7px 16px; border-radius:999px; margin-bottom:22px;
+}
+.hero h2{
+  font-family:var(--font-display); font-weight:700; font-size:42px;
+  margin-bottom:16px; line-height:1.15; letter-spacing:-0.5px;
+  background:linear-gradient(180deg, #fff, #b8c6de);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.hero h2 .accent{
+  background:linear-gradient(90deg, var(--cyan), var(--violet));
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.hero p{ color:var(--text-dim); font-size:15px; line-height:1.7; max-width:540px; margin:0 auto; }
+
+/* ---- network motif ---- */
+.network{ width:100%; max-width:640px; height:90px; margin:32px auto 0; opacity:0.9; }
+.network circle{ fill:var(--cyan); }
+.network line{ stroke:var(--line); stroke-width:1; }
+.network .pulse{ animation:pulse 2.4s ease-in-out infinite; }
+@keyframes pulse{ 0%,100%{opacity:0.4; r:2.5;} 50%{opacity:1; r:4;} }
+
+/* ---- service grid ---- */
+.svc-row{
+  flex:1; display:flex; align-items:stretch; justify-content:center; gap:22px;
+  max-width:1140px; margin:44px auto 0; padding:0 32px 90px; flex-wrap:wrap;
+}
+
+.svc-card{
+  position:relative; width:320px; flex:1 1 300px; max-width:350px;
+  background:var(--surface); color:var(--text);
+  border-radius:18px; border:1px solid var(--line);
+  padding:0; text-align:left; cursor:pointer;
+  transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+  display:flex; flex-direction:column; overflow:hidden;
+  font-family:inherit;
+}
+.svc-card::before{
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg, var(--cyan), var(--violet));
+  opacity:0; transition:opacity .25s ease;
+}
+.svc-card:hover, .svc-card:focus-visible{
+  transform:translateY(-6px);
+  border-color:rgba(63,214,255,0.4);
+  box-shadow:0 20px 50px rgba(0,0,0,0.45), 0 0 0 1px rgba(63,214,255,0.15);
+  outline:none;
+}
+.svc-card:hover::before{ opacity:1; }
+
+.svc-top{ padding:26px 26px 0; display:flex; align-items:flex-start; justify-content:space-between; }
+.svc-icon{
+  width:46px; height:46px; border-radius:12px;
+  background:var(--surface-2); border:1px solid var(--line);
+  display:flex; align-items:center; justify-content:center;
+  transition:border-color .25s ease, box-shadow .25s ease;
+}
+.svc-card:hover .svc-icon{ border-color:rgba(63,214,255,0.5); box-shadow:0 0 18px rgba(63,214,255,0.2); }
+.svc-icon svg{ width:22px; height:22px; }
+.svc-code{
+  font-family:var(--font-mono); font-size:10.5px; letter-spacing:1.5px;
+  color:var(--text-dimmer); text-align:right; padding-top:4px;
+}
+
+.svc-body{ padding:18px 26px 24px; flex:1; display:flex; flex-direction:column; }
+.svc-title{
+  font-family:var(--font-display); font-weight:600; font-size:19px;
+  margin-bottom:9px; letter-spacing:-0.2px;
+}
+.svc-desc{ font-size:13.5px; color:var(--text-dim); line-height:1.65; margin-bottom:20px; flex:1; }
+
+.svc-foot{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:16px 26px; border-top:1px solid var(--line);
+}
+.svc-status{ display:flex; align-items:center; gap:7px; font-family:var(--font-mono); font-size:10.5px; color:var(--green); letter-spacing:0.5px; }
+.svc-status .blip{ width:6px; height:6px; border-radius:50%; background:var(--green); box-shadow:0 0 6px var(--green); }
+.svc-cta{
+  display:inline-flex; align-items:center; gap:6px;
+  font-family:var(--font-mono); font-weight:600; font-size:11.5px; letter-spacing:0.5px;
+  color:var(--cyan); text-transform:uppercase;
+}
+.svc-cta .arrow{ transition:transform .2s ease; }
+.svc-card:hover .svc-cta .arrow{ transform:translateX(4px); }
+
+footer{
+  text-align:center; padding:24px 24px 32px; color:var(--text-dimmer);
+  font-size:11.5px; border-top:1px solid var(--line);
+}
+footer .mono{ font-family:var(--font-mono); letter-spacing:0.5px; }
+
+.toast{
+  position:fixed; bottom:26px; left:50%; transform:translateX(-50%) translateY(20px);
+  background:var(--surface-2); color:var(--text); padding:13px 22px; border-radius:10px; font-size:13px;
+  box-shadow:0 15px 30px rgba(0,0,0,0.45); opacity:0; pointer-events:none; transition:all .3s ease;
+  z-index:300; display:flex; align-items:center; gap:10px; border:1px solid var(--line);
+  font-family:var(--font-mono); font-size:12px;
+}
+.toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+.toast .dot{ width:7px; height:7px; border-radius:50%; background:var(--cyan); flex-shrink:0; box-shadow:0 0 8px var(--cyan); }
+
+.svc-lock{
+  display:inline-flex; align-items:center; gap:6px;
+  font-family:var(--font-mono); font-size:10px; color:var(--text-dimmer); letter-spacing:0.5px;
+}
+
+.modal-overlay{
+  position:fixed; inset:0; background:rgba(6,10,18,0.75); display:none;
+  align-items:center; justify-content:center; z-index:400; padding:20px; backdrop-filter:blur(3px);
+}
+.modal-overlay.show{ display:flex; }
+.modal-box{
+  background:var(--surface); border:1px solid var(--line); border-radius:16px;
+  width:100%; max-width:400px; padding:28px;
+  box-shadow:0 30px 70px rgba(0,0,0,0.55);
+}
+.modal-box .modal-eyebrow{
+  font-family:var(--font-mono); font-size:10.5px; letter-spacing:2px; text-transform:uppercase;
+  color:var(--cyan); margin-bottom:8px;
+}
+.modal-box h4{ font-family:var(--font-display); font-size:19px; font-weight:600; margin-bottom:8px; color:var(--text); }
+.modal-box .modal-desc{ font-size:13px; color:var(--text-dim); margin-bottom:20px; line-height:1.55; }
+.modal-field{ margin-bottom:14px; }
+.modal-field label{ display:block; font-size:11.5px; font-weight:600; color:var(--text-dim); margin-bottom:6px; font-family:var(--font-mono); letter-spacing:0.5px; text-transform:uppercase; }
+.modal-field input{
+  width:100%; padding:11px 14px; border-radius:9px; border:1px solid var(--line);
+  font-family:var(--font-body); font-size:14px; background:var(--surface-2); color:var(--text);
+}
+.modal-field input:focus{ outline:none; border-color:var(--cyan); box-shadow:0 0 0 3px rgba(63,214,255,0.12); }
+.modal-err{ display:none; color:#ff6b81; font-size:11.5px; margin-top:8px; font-weight:600; font-family:var(--font-mono); }
+.modal-actions{ display:flex; justify-content:flex-end; gap:10px; margin-top:20px; }
+.modal-btn{
+  font-family:var(--font-body); font-weight:600; font-size:13px;
+  border-radius:9px; padding:10px 20px; cursor:pointer; border:none; transition:all .2s ease;
+}
+.modal-btn-ghost{ background:transparent; color:var(--text-dim); }
+.modal-btn-ghost:hover{ color:var(--text); }
+.modal-btn-primary{ background:var(--cyan); color:var(--bg); }
+.modal-btn-primary:hover{ box-shadow:0 0 20px rgba(63,214,255,0.35); }
+.modal-btn-primary:disabled{ opacity:0.5; cursor:not-allowed; }
+
+@media (max-width:720px){
+  .topbar{ padding:16px 20px; }
+  .status-pill{ display:none; }
+  .hero{ padding:52px 20px 8px; }
+  .hero h2{ font-size:29px; }
+  .network{ display:none; }
+  .svc-row{ margin-top:32px; padding:0 20px 60px; gap:18px; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="brand">
+      <div class="brand-mark">SJ</div>
+      <div class="brand-text">
+        <div class="eyebrow">Setjen DPR RI</div>
+        <h1>Bagian Pembinaan Jabatan Fungsional</h1>
+      </div>
+    </div>
+    <div class="status-pill"><span class="blip"></span>3 LAYANAN AKTIF</div>
+  </div>
+
+  <div class="hero">
+    <div class="eyebrow">⬡ Portal Terintegrasi · Bagian Pembinaan Jabatan Fungsional</div>
+    <h2>Portal Pembinaan Jabatan Fungsional<br>demi mengelola pekerjaan lebih <span class="accent">smart</span></h2>
+    <p>Kelola formasi, nomor PAK, dan kinerja unit dari satu titik akses — satu portal yang bikin pekerjaan pembinaan jabatan fungsional jadi lebih cepat, rapi, dan terukur.</p>
+
+    <svg class="network" viewBox="0 0 640 90" xmlns="http://www.w3.org/2000/svg">
+      <line x1="60" y1="45" x2="200" y2="20"/>
+      <line x1="60" y1="45" x2="200" y2="70"/>
+      <line x1="200" y1="20" x2="340" y2="45"/>
+      <line x1="200" y1="70" x2="340" y2="45"/>
+      <line x1="340" y1="45" x2="480" y2="20"/>
+      <line x1="340" y1="45" x2="480" y2="70"/>
+      <line x1="480" y1="20" x2="580" y2="45"/>
+      <line x1="480" y1="70" x2="580" y2="45"/>
+      <circle class="pulse" cx="60" cy="45" r="3"/>
+      <circle class="pulse" cx="200" cy="20" r="3" style="animation-delay:.3s"/>
+      <circle class="pulse" cx="200" cy="70" r="3" style="animation-delay:.6s"/>
+      <circle class="pulse" cx="340" cy="45" r="3" style="animation-delay:.2s"/>
+      <circle class="pulse" cx="480" cy="20" r="3" style="animation-delay:.5s"/>
+      <circle class="pulse" cx="480" cy="70" r="3" style="animation-delay:.8s"/>
+      <circle class="pulse" cx="580" cy="45" r="3" style="animation-delay:.4s"/>
+    </svg>
+  </div>
+
+  <div class="svc-row" id="svc-row"></div>
+
+  <footer>
+    <div class="mono">© 2026 · Bagian Pembinaan Jabatan Fungsional · Sekretariat Jenderal DPR RI</div>
+  </footer>
+</div>
+
+<div class="modal-overlay" id="modal-login">
+  <div class="modal-box">
+    <div class="modal-eyebrow">⬡ Akses Terbatas</div>
+    <h4 id="login-title">Login diperlukan</h4>
+    <p class="modal-desc" id="login-desc">Layanan ini hanya bisa diakses oleh admin/petugas terdaftar. Masukkan username dan password.</p>
+    <div class="modal-field">
+      <label>Username</label>
+      <input id="login-user" type="text" placeholder="Username" autocomplete="username">
+    </div>
+    <div class="modal-field">
+      <label>Password</label>
+      <input id="login-pass" type="password" placeholder="Password" autocomplete="current-password" onkeydown="if(event.key==='Enter') submitLogin();">
+      <div class="modal-err" id="login-err">Username atau password salah.</div>
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn modal-btn-ghost" onclick="closeLoginModal()">Batal</button>
+      <button class="modal-btn modal-btn-primary" id="login-submit" onclick="submitLogin()">Masuk</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><span class="dot"></span><span id="toast-text">Membuka layanan...</span></div>
+
+<script>
+/* ============================================================
+   DAFTAR LAYANAN — edit di sini kalau ada perubahan/tambahan URL
+============================================================ */
+const SERVICES = [
+  {
+    kode: 'SVC-01 · FORMASI',
+    title: 'Usulan Formasi',
+    desc: 'Ajukan dan pantau usulan formasi jabatan fungsional untuk unit kerja Anda secara real-time.',
+    url: 'https://script.google.com/macros/s/AKfycbwHQywuR7jYZAM4ML_e5n_HNlrclvc3qtWQSg2poZ9OV61p3tsXchzsTQYMIBAAz9GC/exec',
+    protected: true,
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="#3fd6ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="10" width="4" height="10"/><rect x="10" y="5" width="4" height="15"/><rect x="17" y="13" width="4" height="7"/></svg>'
+  },
+  {
+    kode: 'SVC-02 · PAK',
+    title: 'Ambil Nomor PAK',
+    desc: 'Ambil nomor Penetapan Angka Kredit (PAK) resmi secara mandiri, tanpa perlu login.',
+    url: 'https://script.google.com/macros/s/AKfycbxzS3xyVSWnHDq9QB6jwLx3opRD_rJjbfC1KM6LTsELmscxcPqCVJxj_F2G7QKeo18M/exec',
+    protected: false,
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="#3fd6ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M8.5 12.5l2.3 2.3L15.7 9.6"/></svg>'
+  },
+  {
+    kode: 'SVC-03 · KINERJA',
+    title: 'Manajemen Kinerja Unit',
+    desc: 'Kelola dan pantau capaian kinerja unit kerja secara berkala dan terintegrasi.',
+    url: 'https://script.google.com/macros/s/AKfycbwUDR1_b86lTq6UBJnzYdbKgzMOVbObbLjPeN_-60agEbTFW6e10SFzBehdyZgr1rrI/exec',
+    protected: true,
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="#3fd6ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 15l3.5-4 3 2.5L19 8"/></svg>'
+  },
+  {
+    kode: 'SVC-04 · SURAT',
+    title: 'Sistem Penomoran Surat',
+    desc: 'Kelola dan ambil nomor surat resmi untuk kebutuhan administrasi Bagian Pembinaan Jabatan Fungsional.',
+    url: 'https://script.google.com/macros/s/AKfycbw_ZG1lCs5kUx0110qA2ERC2bdZo3vTx2Cz5179fXJZVGGn1VvyFvVkad2Cdher79RGEQ/exec',
+    protected: true,
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="#3fd6ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v5h5"/><path d="M8 13h8"/><path d="M8 17h5"/></svg>'
+  },
+  {
+    kode: 'SVC-05 · KALKULATOR AK',
+    title: 'Kalkulator Angka Kredit',
+    desc: 'Hitung otomatis kebutuhan angka kredit untuk kenaikan pangkat atau kenaikan jenjang jabatan fungsional.',
+    url: 'https://whisnuelianto.github.io/kalkulator-ak/',
+    protected: false,
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="#3fd6ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8"/><circle cx="8" cy="11" r="1"/><circle cx="12" cy="11" r="1"/><circle cx="16" cy="11" r="1"/><circle cx="8" cy="15" r="1"/><circle cx="12" cy="15" r="1"/><circle cx="16" cy="15" r="1"/><circle cx="8" cy="19" r="1"/><circle cx="12" cy="19" r="1"/><circle cx="16" cy="19" r="1"/></svg>'
+  },
+  {
+    kode: 'SVC-06 · TIMER UJIKOM',
+    title: 'Timer Pelaksanaan Uji Kompetensi',
+    desc: 'Pengatur waktu untuk memandu jalannya pelaksanaan uji kompetensi jabatan fungsional.',
+    url: 'https://whisnuelianto.github.io/Timer-Ujikom/timer_ujikom_remote.html',
+    protected: false,
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="#3fd6ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2"/><path d="M9 2h6"/><path d="M12 2v3"/></svg>'
+  }
+];
+
+/* ============================================================
+   AKUN LOGIN — client-side sederhana (hosting statis GitHub Pages).
+   Catatan: ini BUKAN pengaman kuat karena bisa dilihat lewat page source.
+   Kalau butuh keamanan lebih serius, sambungkan ke backend.
+   Tambah akun baru cukup tambahkan baris di array ini.
+============================================================ */
+const ACCOUNTS = [
+  { user: 'binajabfung', pass: 'dprjayatigakali123' }
+];
+
+let unlocked = false;
+let pendingServiceIndex = null;
+
+function renderServices(){
+  const row = document.getElementById('svc-row');
+  row.innerHTML = SERVICES.map(function(s, i){
+    const statusHtml = s.protected
+      ? '<span class="svc-lock">&#128274; PERLU LOGIN</span>'
+      : '<span class="svc-status"><span class="blip"></span>PUBLIK</span>';
+    return '' +
+      '<button class="svc-card" onclick="openService(' + i + ')" aria-label="Buka ' + s.title + '">' +
+        '<div class="svc-top">' +
+          '<div class="svc-icon">' + s.icon + '</div>' +
+          '<div class="svc-code">' + s.kode + '</div>' +
+        '</div>' +
+        '<div class="svc-body">' +
+          '<div class="svc-title">' + s.title + '</div>' +
+          '<div class="svc-desc">' + s.desc + '</div>' +
+        '</div>' +
+        '<div class="svc-foot">' +
+          statusHtml +
+          '<span class="svc-cta">Buka <span class="arrow">&rarr;</span></span>' +
+        '</div>' +
+      '</button>';
+  }).join('');
+}
+
+function openService(i){
+  const s = SERVICES[i];
+  if(s.protected && !unlocked){
+    pendingServiceIndex = i;
+    document.getElementById('login-title').textContent = 'Login untuk ' + s.title;
+    document.getElementById('login-desc').textContent = 'Layanan "' + s.title + '" hanya bisa diakses oleh admin/petugas terdaftar. Masukkan username dan password.';
+    document.getElementById('login-err').style.display = 'none';
+    document.getElementById('login-user').value = '';
+    document.getElementById('login-pass').value = '';
+    document.getElementById('modal-login').classList.add('show');
+    setTimeout(function(){ document.getElementById('login-user').focus(); }, 100);
+    return;
+  }
+  showToast('> Membuka ' + s.title + '...');
+  window.open(s.url, '_blank');
+}
+
+function closeLoginModal(){
+  document.getElementById('modal-login').classList.remove('show');
+  pendingServiceIndex = null;
+}
+
+function submitLogin(){
+  const user = document.getElementById('login-user').value.trim();
+  const pass = document.getElementById('login-pass').value;
+  const btn = document.getElementById('login-submit');
+  btn.disabled = true; btn.textContent = 'Memeriksa...';
+
+  setTimeout(function(){
+    const valid = ACCOUNTS.some(function(a){ return a.user === user && a.pass === pass; });
+    btn.disabled = false; btn.textContent = 'Masuk';
+    if(valid){
+      unlocked = true;
+      document.getElementById('modal-login').classList.remove('show');
+      if(pendingServiceIndex !== null){
+        const s = SERVICES[pendingServiceIndex];
+        showToast('> Membuka ' + s.title + '...');
+        window.open(s.url, '_blank');
+        pendingServiceIndex = null;
+      }
+    } else {
+      document.getElementById('login-err').style.display = 'block';
+    }
+  }, 300);
+}
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  document.getElementById('toast-text').textContent = msg;
+  t.classList.add('show');
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 2200);
+}
+
+renderServices();
+</script>
+</body>
+</html>
