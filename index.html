@@ -375,17 +375,15 @@ const SERVICES = [
     url: 'https://whisnuelianto.github.io/Timer-Ujikom/timer_ujikom_remote.html',
     protected: false,
     icon: '<svg viewBox="0 0 24 24" fill="none" stroke="#3fd6ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2"/><path d="M9 2h6"/><path d="M12 2v3"/></svg>'
+  },
+  {
+    kode: 'SVC-07 · VERIFIKASI UJIKOM',
+    title: 'Verifikasi Uji Kompetensi',
+    desc: 'Proses verifikasi uji kompetensi dilakukan secara digital dan lebih terkelola dengan smart.',
+    url: 'https://verifikasi-ujikom.web.app/',
+    protected: true,
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="#3fd6ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>'
   }
-];
-
-/* ============================================================
-   AKUN LOGIN — client-side sederhana (hosting statis GitHub Pages).
-   Catatan: ini BUKAN pengaman kuat karena bisa dilihat lewat page source.
-   Kalau butuh keamanan lebih serius, sambungkan ke backend.
-   Tambah akun baru cukup tambahkan baris di array ini.
-============================================================ */
-const ACCOUNTS = [
-  { user: 'binajabfung', pass: 'dprjayatigakali123' }
 ];
 
 let unlocked = false;
@@ -442,23 +440,27 @@ function submitLogin(){
   const pass = document.getElementById('login-pass').value;
   const btn = document.getElementById('login-submit');
   btn.disabled = true; btn.textContent = 'Memeriksa...';
-
-  setTimeout(function(){
-    const valid = ACCOUNTS.some(function(a){ return a.user === user && a.pass === pass; });
-    btn.disabled = false; btn.textContent = 'Masuk';
-    if(valid){
-      unlocked = true;
-      document.getElementById('modal-login').classList.remove('show');
-      if(pendingServiceIndex !== null){
-        const s = SERVICES[pendingServiceIndex];
-        showToast('> Membuka ' + s.title + '...');
-        window.open(s.url, '_blank');
-        pendingServiceIndex = null;
+  google.script.run
+    .withSuccessHandler(function(res){
+      btn.disabled = false; btn.textContent = 'Masuk';
+      if(res && res.success){
+        unlocked = true;
+        document.getElementById('modal-login').classList.remove('show');
+        if(pendingServiceIndex !== null){
+          const s = SERVICES[pendingServiceIndex];
+          showToast('> Membuka ' + s.title + '...');
+          window.open(s.url, '_blank');
+          pendingServiceIndex = null;
+        }
+      } else {
+        document.getElementById('login-err').style.display = 'block';
       }
-    } else {
-      document.getElementById('login-err').style.display = 'block';
-    }
-  }, 300);
+    })
+    .withFailureHandler(function(err){
+      btn.disabled = false; btn.textContent = 'Masuk';
+      showToast('Gagal memeriksa login: ' + err.message);
+    })
+    .checkLogin(user, pass);
 }
 
 function showToast(msg){
