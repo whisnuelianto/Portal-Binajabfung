@@ -4,6 +4,7 @@
 <base target="_top">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:,">
 <title>Portal Human Capital · Setjen DPR RI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -435,32 +436,36 @@ function closeLoginModal(){
   pendingServiceIndex = null;
 }
 
+// Kredensial dicek langsung di browser (client-side), karena halaman ini
+// di-hosting sebagai situs statis (GitHub Pages), bukan lewat Apps Script,
+// jadi tidak bisa memanggil google.script.run. Ini tetap proteksi ringan
+// (bukan otentikasi tingkat tinggi) — siapapun yang buka "view source" bisa
+// melihat kredensial ini. Cukup untuk mencegah orang iseng, bukan untuk data sensitif.
+const PORTAL_USERNAME = 'binajabfung';
+const PORTAL_PASSWORD = 'dprjayatigakali123';
+
 function submitLogin(){
   const user = document.getElementById('login-user').value.trim();
   const pass = document.getElementById('login-pass').value;
   const btn = document.getElementById('login-submit');
   btn.disabled = true; btn.textContent = 'Memeriksa...';
-  google.script.run
-    .withSuccessHandler(function(res){
-      btn.disabled = false; btn.textContent = 'Masuk';
-      if(res && res.success){
-        unlocked = true;
-        document.getElementById('modal-login').classList.remove('show');
-        if(pendingServiceIndex !== null){
-          const s = SERVICES[pendingServiceIndex];
-          showToast('> Membuka ' + s.title + '...');
-          window.open(s.url, '_blank');
-          pendingServiceIndex = null;
-        }
-      } else {
-        document.getElementById('login-err').style.display = 'block';
+
+  setTimeout(function(){ // beri jeda kecil supaya terasa natural, bukan instan
+    btn.disabled = false; btn.textContent = 'Masuk';
+    const ok = (user === PORTAL_USERNAME && pass === PORTAL_PASSWORD);
+    if(ok){
+      unlocked = true;
+      document.getElementById('modal-login').classList.remove('show');
+      if(pendingServiceIndex !== null){
+        const s = SERVICES[pendingServiceIndex];
+        showToast('> Membuka ' + s.title + '...');
+        window.open(s.url, '_blank');
+        pendingServiceIndex = null;
       }
-    })
-    .withFailureHandler(function(err){
-      btn.disabled = false; btn.textContent = 'Masuk';
-      showToast('Gagal memeriksa login: ' + err.message);
-    })
-    .checkLogin(user, pass);
+    } else {
+      document.getElementById('login-err').style.display = 'block';
+    }
+  }, 300);
 }
 
 function showToast(msg){
