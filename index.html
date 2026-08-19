@@ -267,13 +267,13 @@ footer .mono{ font-family:var(--font-mono); letter-spacing:0.5px; }
         <h1>Bagian Pembinaan Jabatan Fungsional</h1>
       </div>
     </div>
-    <div class="status-pill"><span class="blip"></span>3 LAYANAN AKTIF</div>
+    <div class="status-pill"><span class="blip"></span><span id="svc-count-label">ALAT KERJA AKTIF</span></div>
   </div>
 
   <div class="hero">
     <div class="eyebrow">⬡ Portal Terintegrasi · Bagian Pembinaan Jabatan Fungsional</div>
-    <h2>Portal Pembinaan Jabatan Fungsional<br>demi mengelola pekerjaan lebih <span class="accent">smart</span></h2>
-    <p>Kelola formasi, nomor PAK, dan kinerja unit dari satu titik akses — satu portal yang bikin pekerjaan pembinaan jabatan fungsional jadi lebih cepat, rapi, dan terukur.</p>
+    <h2>Bekerja lebih <span class="accent">smart</span>, <span class="accent">efisien</span>, dan <span class="accent">cepat</span></h2>
+    <p>Kumpulan alat kerja digital Bagian Pembinaan Jabatan Fungsional, dari satu titik akses — terus bertambah dari waktu ke waktu, tanpa perlu lagi bolak-balik buka banyak aplikasi terpisah.</p>
 
     <svg class="network" viewBox="0 0 640 90" xmlns="http://www.w3.org/2000/svg">
       <line x1="60" y1="45" x2="200" y2="20"/>
@@ -305,7 +305,7 @@ footer .mono{ font-family:var(--font-mono); letter-spacing:0.5px; }
   <div class="modal-box">
     <div class="modal-eyebrow">⬡ Akses Terbatas</div>
     <h4 id="login-title">Login diperlukan</h4>
-    <p class="modal-desc" id="login-desc">Layanan ini hanya bisa diakses oleh admin/petugas terdaftar. Masukkan username dan password.</p>
+    <p class="modal-desc" id="login-desc">Alat kerja ini hanya bisa diakses oleh admin/petugas terdaftar. Masukkan username dan password.</p>
     <div class="modal-field">
       <label>Username</label>
       <input id="login-user" type="text" placeholder="Username" autocomplete="username">
@@ -407,6 +407,8 @@ let unlocked = false;
 let pendingServiceIndex = null;
 
 function renderServices(){
+  const countLabel = document.getElementById('svc-count-label');
+  if(countLabel) countLabel.textContent = SERVICES.length + ' ALAT KERJA AKTIF';
   const row = document.getElementById('svc-row');
   row.innerHTML = SERVICES.map(function(s, i){
     const statusHtml = s.protected
@@ -435,7 +437,7 @@ function openService(i){
   if(s.protected && !unlocked){
     pendingServiceIndex = i;
     document.getElementById('login-title').textContent = 'Login untuk ' + s.title;
-    document.getElementById('login-desc').textContent = 'Layanan "' + s.title + '" hanya bisa diakses oleh admin/petugas terdaftar. Masukkan username dan password.';
+    document.getElementById('login-desc').textContent = 'Alat kerja "' + s.title + '" hanya bisa diakses oleh admin/petugas terdaftar. Masukkan username dan password.';
     document.getElementById('login-err').style.display = 'none';
     document.getElementById('login-user').value = '';
     document.getElementById('login-pass').value = '';
