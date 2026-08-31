@@ -83,6 +83,14 @@ body{
   font-family:var(--font-display); font-weight:600; font-size:16px;
   color:var(--text); letter-spacing:0.2px;
 }
+.guide-link{
+  font-family:var(--font-body); font-weight:600; font-size:12.5px;
+  color:var(--cyan); text-decoration:none;
+  border:1px solid rgba(63,214,255,0.3); background:rgba(63,214,255,0.06);
+  padding:8px 16px; border-radius:999px; transition:all .2s ease;
+  white-space:nowrap;
+}
+.guide-link:hover{ background:rgba(63,214,255,0.14); border-color:rgba(63,214,255,0.5); }
 .status-pill{
   display:flex; align-items:center; gap:8px;
   font-family:var(--font-mono); font-size:11px; letter-spacing:1px;
@@ -246,6 +254,7 @@ footer .mono{ font-family:var(--font-mono); letter-spacing:0.5px; }
 @media (max-width:720px){
   .topbar{ padding:16px 20px; }
   .status-pill{ display:none; }
+  .guide-link{ font-size:11px; padding:6px 12px; }
   .hero{ padding:52px 20px 8px; }
   .hero h2{ font-size:29px; }
   .network{ display:none; }
@@ -267,7 +276,10 @@ footer .mono{ font-family:var(--font-mono); letter-spacing:0.5px; }
         <h1>Bagian Pembinaan Jabatan Fungsional</h1>
       </div>
     </div>
-    <div class="status-pill"><span class="blip"></span><span id="svc-count-label">ALAT KERJA AKTIF</span></div>
+    <div style="display:flex; align-items:center; gap:14px;">
+      <a href="https://script.google.com/macros/s/AKfycbyLIgDWRFW7DSBUXQ3puBHmt6XYzFUVfcbCt07D5lfAbPUzeP4rAw_rzPnqPzW_6rp8XQ/exec" target="_blank" class="guide-link">📖 Panduan Penggunaan</a>
+      <div class="status-pill"><span class="blip"></span><span id="svc-count-label">ALAT KERJA AKTIF</span></div>
+    </div>
   </div>
 
   <div class="hero">
