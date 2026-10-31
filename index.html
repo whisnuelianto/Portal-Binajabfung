@@ -1,544 +1,456 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<base target="_top">
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alat kerja Pembinaan Jabatan Fungsional · Setjen DPR RI</title>
 <link rel="icon" href="data:,">
-<title>Portal Human Capital · Setjen DPR RI</title>
+<script>
+(function(){try{var t=localStorage.getItem('pjf-theme');if(!t){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#0a0e17;
-  --bg-2:#0d1420;
-  --surface:#121a2b;
-  --surface-2:#182338;
-  --line:rgba(148,178,224,0.14);
-  --line-soft:rgba(148,178,224,0.07);
-  --cyan:#3fd6ff;
-  --cyan-dim:#1ea7c9;
-  --violet:#8b7bff;
-  --green:#3ee6a8;
-  --text:#e7edf7;
-  --text-dim:#7c8aa8;
-  --text-dimmer:#4f5d78;
-  --font-display:'Space Grotesk', sans-serif;
-  --font-body:'Inter', sans-serif;
-  --font-mono:'JetBrains Mono', monospace;
+  --paper:#f2f5f3; --surface:#ffffff; --ink:#11261f; --muted:#56695f; --line:#d5dfda;
+  --pine:#15664a; --pine-ink:#ffffff; --soft:#e2eee8; --focus:#1b8f68;
+  --c-karier:#2a6f97; --c-ujikom:#3a7d44; --c-admin:#a4476a; --c-kolab:#8a6a2f;
+  --shadow:0 1px 2px rgba(17,38,31,.06), 0 8px 24px rgba(17,38,31,.06);
+  --display:'Bricolage Grotesque','Segoe UI',system-ui,sans-serif;
+  --body:'Figtree','Segoe UI',system-ui,sans-serif;
 }
-*{box-sizing:border-box; margin:0; padding:0;}
-html,body{height:100%;}
-body{
-  font-family:var(--font-body);
-  background:var(--bg);
-  color:var(--text);
-  min-height:100vh;
-  -webkit-font-smoothing:antialiased;
-  overflow-x:hidden;
+[data-theme="dark"]{
+  --paper:#0d1613; --surface:#14211c; --ink:#e7f0ea; --muted:#92a99d; --line:#25362f;
+  --pine:#58cfa2; --pine-ink:#07281c; --soft:#18302a; --focus:#58cfa2;
+  --c-karier:#78b9e0; --c-ujikom:#86d393; --c-admin:#e590b0; --c-kolab:#dbb872;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
 }
-::selection{ background:var(--cyan); color:var(--bg); }
+*{box-sizing:border-box;margin:0;padding:0}
+html{color-scheme:light dark}
+[data-theme="light"]{color-scheme:light}
+[data-theme="dark"]{color-scheme:dark}
+body{font-family:var(--body);background:var(--paper);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100vh}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:6px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px}
 
-/* ---- background grid + glow ---- */
-.bg-grid{
-  position:fixed; inset:0; pointer-events:none; z-index:0;
-  background-image:
-    linear-gradient(var(--line-soft) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
-  background-size:56px 56px;
-  mask-image:radial-gradient(ellipse 900px 600px at 50% 0%, black 40%, transparent 85%);
-}
-.bg-glow{
-  position:fixed; inset:0; pointer-events:none; z-index:0;
-  background:
-    radial-gradient(700px 420px at 15% 0%, rgba(63,214,255,0.14), transparent 60%),
-    radial-gradient(700px 420px at 90% 15%, rgba(139,123,255,0.12), transparent 60%),
-    radial-gradient(600px 400px at 50% 100%, rgba(62,230,168,0.08), transparent 60%);
-}
+/* header */
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 0}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+.mark{width:38px;height:38px;border-radius:11px;background:var(--pine);color:var(--pine-ink);display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:15px;flex:none}
+.brand b{display:block;font-family:var(--display);font-weight:600;font-size:16px;line-height:1.2}
+.brand small{display:block;font-size:13px;color:var(--muted)}
+.top nav{display:flex;align-items:center;gap:8px}
+.pill-link{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border:1px solid var(--line);border-radius:999px;font-size:14px;font-weight:500;text-decoration:none;background:var(--surface)}
+.pill-link:hover{border-color:var(--pine)}
+.icon-btn{width:40px;height:40px;border-radius:999px;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center}
+.icon-btn:hover{border-color:var(--pine)}
+.icon-btn svg,.pill-link svg{width:18px;height:18px}
 
-.wrap{ position:relative; z-index:1; min-height:100vh; display:flex; flex-direction:column; }
+/* hero */
+.hero{padding:22px 0 14px;max-width:780px}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(30px,4.2vw,46px);line-height:1.08;letter-spacing:-.025em}
+.lead{margin-top:10px;font-size:17px;color:var(--muted);max-width:56ch}
+.finder{position:relative;margin-top:20px}
+.finder svg{position:absolute;left:18px;top:50%;transform:translateY(-50%);width:22px;height:22px;color:var(--muted)}
+.finder input{width:100%;height:54px;border-radius:16px;border:1.5px solid var(--line);background:var(--surface);padding:0 96px 0 54px;font:500 18px var(--body);color:var(--ink);box-shadow:var(--shadow)}
+.finder input::placeholder{color:var(--muted);font-weight:400}
+.finder input:focus{outline:none;border-color:var(--pine);box-shadow:0 0 0 4px color-mix(in srgb,var(--pine) 18%,transparent)}
+.keys{position:absolute;right:14px;top:50%;transform:translateY(-50%);display:flex;gap:4px}
+.keys kbd{font:600 12px var(--body);padding:3px 7px;border-radius:6px;border:1px solid var(--line);color:var(--muted);background:var(--paper)}
+.ideas{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center;color:var(--muted);font-size:14px}
+.ideas button{padding:6px 12px;border-radius:999px;background:var(--soft);font-size:14px;font-weight:500}
+.ideas button:hover{background:color-mix(in srgb,var(--pine) 22%,var(--soft))}
 
-/* ---- topbar ---- */
-.topbar{
-  display:flex; align-items:center; justify-content:space-between;
-  padding:20px 40px; border-bottom:1px solid var(--line);
-}
-.brand{ display:flex; align-items:center; gap:12px; }
-.brand-mark{
-  width:36px; height:36px; border-radius:9px;
-  background:var(--surface-2); border:1px solid var(--line);
-  display:flex; align-items:center; justify-content:center;
-  font-family:var(--font-mono); font-weight:700; font-size:12px;
-  color:var(--cyan); position:relative;
-}
-.brand-mark::after{
-  content:''; position:absolute; inset:-1px; border-radius:9px;
-  box-shadow:0 0 14px rgba(63,214,255,0.35); opacity:0.6;
-}
-.brand-text .eyebrow{
-  font-family:var(--font-mono); font-size:10px; letter-spacing:2px;
-  text-transform:uppercase; color:var(--text-dim);
-}
-.brand-text h1{
-  font-family:var(--font-display); font-weight:600; font-size:16px;
-  color:var(--text); letter-spacing:0.2px;
-}
-.guide-link{
-  font-family:var(--font-body); font-weight:600; font-size:12.5px;
-  color:var(--cyan); text-decoration:none;
-  border:1px solid rgba(63,214,255,0.3); background:rgba(63,214,255,0.06);
-  padding:8px 16px; border-radius:999px; transition:all .2s ease;
-  white-space:nowrap;
-}
-.guide-link:hover{ background:rgba(63,214,255,0.14); border-color:rgba(63,214,255,0.5); }
-.status-pill{
-  display:flex; align-items:center; gap:8px;
-  font-family:var(--font-mono); font-size:11px; letter-spacing:1px;
-  color:var(--text-dim); border:1px solid var(--line); padding:7px 14px; border-radius:999px;
-}
-.status-pill .blip{
-  width:7px; height:7px; border-radius:50%; background:var(--green);
-  box-shadow:0 0 8px var(--green); animation:blip 1.8s ease-in-out infinite;
-}
-@keyframes blip{ 0%,100%{opacity:1;} 50%{opacity:0.35;} }
+/* controls */
+.controls{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding:14px 0 6px;border-top:1px solid var(--line);margin-top:6px}
+.seg{display:inline-flex;background:var(--soft);border-radius:12px;padding:4px}
+.seg button{padding:8px 14px;border-radius:9px;font-size:14px;font-weight:500;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:7px 13px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-size:14px;font-weight:500;display:inline-flex;align-items:center;gap:8px}
+.chip i{width:9px;height:9px;border-radius:50%;background:var(--pc,var(--muted))}
+.chip[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
 
-/* ---- hero ---- */
-.hero{
-  text-align:center; max-width:760px; margin:0 auto; padding:72px 24px 16px; position:relative;
-}
-.hero .eyebrow{
-  display:inline-flex; align-items:center; gap:8px;
-  font-family:var(--font-mono); font-size:11px; letter-spacing:2.5px;
-  text-transform:uppercase; color:var(--cyan);
-  border:1px solid rgba(63,214,255,0.3); background:rgba(63,214,255,0.06);
-  padding:7px 16px; border-radius:999px; margin-bottom:22px;
-}
-.hero h2{
-  font-family:var(--font-display); font-weight:700; font-size:42px;
-  margin-bottom:16px; line-height:1.15; letter-spacing:-0.5px;
-  background:linear-gradient(180deg, #fff, #b8c6de);
-  -webkit-background-clip:text; background-clip:text; color:transparent;
-}
-.hero h2 .accent{
-  background:linear-gradient(90deg, var(--cyan), var(--violet));
-  -webkit-background-clip:text; background-clip:text; color:transparent;
-}
-.hero p{ color:var(--text-dim); font-size:15px; line-height:1.7; max-width:540px; margin:0 auto; }
+/* split */
+.split{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:36px;align-items:start;padding-bottom:64px}
+.grp{position:sticky;top:0;z-index:2;background:var(--paper);padding:12px 0 6px;font:600 14px var(--body);color:var(--muted);display:flex;justify-content:space-between}
+.grp span{font-weight:500}
+ul{list-style:none}
+.row{display:grid;grid-template-columns:44px minmax(0,1fr) auto auto;gap:14px;align-items:center;padding:12px 12px 12px 14px;border-radius:14px;position:relative;border:1px solid transparent}
+.row::before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:3px;border-radius:3px;background:var(--pc);opacity:0}
+.row[aria-selected="true"]{background:var(--surface);border-color:var(--line);box-shadow:var(--shadow)}
+.row[aria-selected="true"]::before{opacity:1}
+.ico{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:color-mix(in srgb,var(--pc) 14%,transparent);color:var(--pc)}
+.ico svg{width:22px;height:22px}
+.open{display:block;text-align:left;min-width:0;grid-column:2;grid-row:1}
+.open::after{content:"";position:absolute;inset:0;border-radius:14px}
+.t,.s{display:block}
+.t{font-family:var(--display);font-weight:600;font-size:17px;line-height:1.25;letter-spacing:-.01em}
+.s{font-size:14px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.acc{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:var(--muted);white-space:nowrap}
+.acc svg{width:15px;height:15px}
+.pin{position:relative;z-index:1;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;color:var(--muted)}
+.pin:hover{background:var(--soft);color:var(--ink)}
+.pin svg{width:18px;height:18px}
+.pin[aria-pressed="true"]{color:var(--c-kolab)}
+.pin[aria-pressed="true"] svg{fill:currentColor}
+.detail{display:none;grid-column:1/-1;padding:4px 0 2px 58px;font-size:15px;color:var(--muted)}
+.detail .go{margin-top:10px}
 
-/* ---- network motif ---- */
-.network{ width:100%; max-width:640px; height:90px; margin:32px auto 0; opacity:0.9; }
-.network circle{ fill:var(--cyan); }
-.network line{ stroke:var(--line); stroke-width:1; }
-.network .pulse{ animation:pulse 2.4s ease-in-out infinite; }
-@keyframes pulse{ 0%,100%{opacity:0.4; r:2.5;} 50%{opacity:1; r:4;} }
+/* preview */
+.preview{position:sticky;top:20px;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:28px;box-shadow:var(--shadow);min-height:380px}
+.pv-ico{width:60px;height:60px;border-radius:16px;display:grid;place-items:center;background:color-mix(in srgb,var(--pc) 14%,transparent);color:var(--pc)}
+.pv-ico svg{width:30px;height:30px}
+.pv-grp{margin-top:18px;font-size:14px;font-weight:600;color:var(--pc)}
+.pv-t{font-family:var(--display);font-weight:700;font-size:28px;line-height:1.15;letter-spacing:-.02em;margin-top:4px}
+.pv-d{margin-top:12px;font-size:16px}
+dl.pv{display:grid;grid-template-columns:auto 1fr;gap:10px 18px;margin-top:20px;padding-top:18px;border-top:1px solid var(--line);font-size:15px}
+dl.pv dt{color:var(--muted)}
+.btns{display:flex;gap:10px;margin-top:24px;flex-wrap:wrap}
+.go{display:inline-flex;align-items:center;gap:10px;background:var(--pine);color:var(--pine-ink);padding:12px 20px;border-radius:12px;font-weight:600;font-size:15px}
+.go:hover{filter:brightness(1.06)}
+.go svg{width:18px;height:18px}
+.ghost{display:inline-flex;align-items:center;gap:8px;padding:12px 16px;border-radius:12px;border:1px solid var(--line);font-weight:500;font-size:15px}
+.ghost:hover{border-color:var(--ink)}
+.ghost svg{width:18px;height:18px}
+.ghost[aria-pressed="true"]{border-color:var(--c-kolab);color:var(--c-kolab)}
+.swap{animation:swap .22s ease}
+@keyframes swap{from{opacity:.0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
-/* ---- service grid ---- */
-.svc-row{
-  flex:1; display:flex; align-items:stretch; justify-content:center; gap:22px;
-  max-width:1140px; margin:44px auto 0; padding:0 32px 90px; flex-wrap:wrap;
-}
+.empty{padding:48px 8px;text-align:left}
+.empty b{font-family:var(--display);font-size:20px;display:block}
+.empty p{color:var(--muted);margin:8px 0 16px}
 
-.svc-card{
-  position:relative; width:320px; flex:1 1 300px; max-width:350px;
-  background:var(--surface); color:var(--text);
-  border-radius:18px; border:1px solid var(--line);
-  padding:0; text-align:left; cursor:pointer;
-  transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease;
-  display:flex; flex-direction:column; overflow:hidden;
-  font-family:inherit;
-}
-.svc-card::before{
-  content:''; position:absolute; top:0; left:0; right:0; height:2px;
-  background:linear-gradient(90deg, var(--cyan), var(--violet));
-  opacity:0; transition:opacity .25s ease;
-}
-.svc-card:hover, .svc-card:focus-visible{
-  transform:translateY(-6px);
-  border-color:rgba(63,214,255,0.4);
-  box-shadow:0 20px 50px rgba(0,0,0,0.45), 0 0 0 1px rgba(63,214,255,0.15);
-  outline:none;
-}
-.svc-card:hover::before{ opacity:1; }
+/* one orchestrated entrance */
+.enter .row{animation:rise .5s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i)*35ms)}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 
-.svc-top{ padding:26px 26px 0; display:flex; align-items:flex-start; justify-content:space-between; }
-.svc-icon{
-  width:46px; height:46px; border-radius:12px;
-  background:var(--surface-2); border:1px solid var(--line);
-  display:flex; align-items:center; justify-content:center;
-  transition:border-color .25s ease, box-shadow .25s ease;
-}
-.svc-card:hover .svc-icon{ border-color:rgba(63,214,255,0.5); box-shadow:0 0 18px rgba(63,214,255,0.2); }
-.svc-icon svg{ width:22px; height:22px; }
-.svc-code{
-  font-family:var(--font-mono); font-size:10.5px; letter-spacing:1.5px;
-  color:var(--text-dimmer); text-align:right; padding-top:4px;
-}
+footer{border-top:1px solid var(--line);padding:22px 0 40px;color:var(--muted);font-size:14px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 
-.svc-body{ padding:18px 26px 24px; flex:1; display:flex; flex-direction:column; }
-.svc-title{
-  font-family:var(--font-display); font-weight:600; font-size:19px;
-  margin-bottom:9px; letter-spacing:-0.2px;
-}
-.svc-desc{ font-size:13.5px; color:var(--text-dim); line-height:1.65; margin-bottom:20px; flex:1; }
+/* modal */
+.scrim{position:fixed;inset:0;background:rgba(6,16,12,.55);display:none;align-items:center;justify-content:center;padding:20px;z-index:50}
+.scrim.show{display:flex}
+.modal{background:var(--surface);border-radius:20px;padding:28px;width:100%;max-width:400px;box-shadow:0 24px 70px rgba(0,0,0,.4)}
+.modal h2{font-family:var(--display);font-size:22px;letter-spacing:-.01em}
+.modal p{color:var(--muted);margin:8px 0 18px;font-size:15px}
+.f{margin-bottom:14px}
+.f label{display:block;font-size:14px;font-weight:600;margin-bottom:6px}
+.f input{width:100%;height:46px;border-radius:12px;border:1.5px solid var(--line);background:var(--paper);padding:0 14px;font:500 16px var(--body);color:var(--ink)}
+.f input:focus{outline:none;border-color:var(--pine)}
+.err{display:none;color:#c0392b;font-size:14px;font-weight:500;margin:-4px 0 12px}
+[data-theme="dark"] .err{color:#ff8e80}
+.err.show{display:block}
+.shake{animation:shake .35s}
+@keyframes shake{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+.mbtn{display:flex;gap:10px;justify-content:flex-end;margin-top:6px}
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);background:var(--ink);color:var(--paper);padding:12px 18px;border-radius:12px;font-size:15px;font-weight:500;opacity:0;pointer-events:none;transition:.25s;z-index:60}
+.toast.show{opacity:1;transform:translate(-50%,0)}
 
-.svc-foot{
-  display:flex; align-items:center; justify-content:space-between;
-  padding:16px 26px; border-top:1px solid var(--line);
+@media (max-width:900px){
+  .wrap{padding:0 18px}
+  .split{grid-template-columns:1fr}
+  .preview{display:none}
+  .row{grid-template-columns:44px minmax(0,1fr) auto auto;gap:10px}
+  .acc span{display:none}
+  .row[aria-selected="true"] .detail{display:block}
+  .top nav .pill-link span{display:none}
 }
-.svc-status{ display:flex; align-items:center; gap:7px; font-family:var(--font-mono); font-size:10.5px; color:var(--green); letter-spacing:0.5px; }
-.svc-status .blip{ width:6px; height:6px; border-radius:50%; background:var(--green); box-shadow:0 0 6px var(--green); }
-.svc-cta{
-  display:inline-flex; align-items:center; gap:6px;
-  font-family:var(--font-mono); font-weight:600; font-size:11.5px; letter-spacing:0.5px;
-  color:var(--cyan); text-transform:uppercase;
-}
-.svc-cta .arrow{ transition:transform .2s ease; }
-.svc-card:hover .svc-cta .arrow{ transform:translateX(4px); }
-
-footer{
-  text-align:center; padding:24px 24px 32px; color:var(--text-dimmer);
-  font-size:11.5px; border-top:1px solid var(--line);
-}
-footer .mono{ font-family:var(--font-mono); letter-spacing:0.5px; }
-
-.toast{
-  position:fixed; bottom:26px; left:50%; transform:translateX(-50%) translateY(20px);
-  background:var(--surface-2); color:var(--text); padding:13px 22px; border-radius:10px; font-size:13px;
-  box-shadow:0 15px 30px rgba(0,0,0,0.45); opacity:0; pointer-events:none; transition:all .3s ease;
-  z-index:300; display:flex; align-items:center; gap:10px; border:1px solid var(--line);
-  font-family:var(--font-mono); font-size:12px;
-}
-.toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
-.toast .dot{ width:7px; height:7px; border-radius:50%; background:var(--cyan); flex-shrink:0; box-shadow:0 0 8px var(--cyan); }
-
-.svc-lock{
-  display:inline-flex; align-items:center; gap:6px;
-  font-family:var(--font-mono); font-size:10px; color:var(--text-dimmer); letter-spacing:0.5px;
-}
-
-.modal-overlay{
-  position:fixed; inset:0; background:rgba(6,10,18,0.75); display:none;
-  align-items:center; justify-content:center; z-index:400; padding:20px; backdrop-filter:blur(3px);
-}
-.modal-overlay.show{ display:flex; }
-.modal-box{
-  background:var(--surface); border:1px solid var(--line); border-radius:16px;
-  width:100%; max-width:400px; padding:28px;
-  box-shadow:0 30px 70px rgba(0,0,0,0.55);
-}
-.modal-box .modal-eyebrow{
-  font-family:var(--font-mono); font-size:10.5px; letter-spacing:2px; text-transform:uppercase;
-  color:var(--cyan); margin-bottom:8px;
-}
-.modal-box h4{ font-family:var(--font-display); font-size:19px; font-weight:600; margin-bottom:8px; color:var(--text); }
-.modal-box .modal-desc{ font-size:13px; color:var(--text-dim); margin-bottom:20px; line-height:1.55; }
-.modal-field{ margin-bottom:14px; }
-.modal-field label{ display:block; font-size:11.5px; font-weight:600; color:var(--text-dim); margin-bottom:6px; font-family:var(--font-mono); letter-spacing:0.5px; text-transform:uppercase; }
-.modal-field input{
-  width:100%; padding:11px 14px; border-radius:9px; border:1px solid var(--line);
-  font-family:var(--font-body); font-size:14px; background:var(--surface-2); color:var(--text);
-}
-.modal-field input:focus{ outline:none; border-color:var(--cyan); box-shadow:0 0 0 3px rgba(63,214,255,0.12); }
-.modal-err{ display:none; color:#ff6b81; font-size:11.5px; margin-top:8px; font-weight:600; font-family:var(--font-mono); }
-.modal-actions{ display:flex; justify-content:flex-end; gap:10px; margin-top:20px; }
-.modal-btn{
-  font-family:var(--font-body); font-weight:600; font-size:13px;
-  border-radius:9px; padding:10px 20px; cursor:pointer; border:none; transition:all .2s ease;
-}
-.modal-btn-ghost{ background:transparent; color:var(--text-dim); }
-.modal-btn-ghost:hover{ color:var(--text); }
-.modal-btn-primary{ background:var(--cyan); color:var(--bg); }
-.modal-btn-primary:hover{ box-shadow:0 0 20px rgba(63,214,255,0.35); }
-.modal-btn-primary:disabled{ opacity:0.5; cursor:not-allowed; }
-
-@media (max-width:720px){
-  .topbar{ padding:16px 20px; }
-  .status-pill{ display:none; }
-  .guide-link{ font-size:11px; padding:6px 12px; }
-  .hero{ padding:52px 20px 8px; }
-  .hero h2{ font-size:29px; }
-  .network{ display:none; }
-  .svc-row{ margin-top:32px; padding:0 20px 60px; gap:18px; }
-}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
-
-<div class="bg-grid"></div>
-<div class="bg-glow"></div>
 <div class="wrap">
-
-  <div class="topbar">
+  <header class="top">
     <div class="brand">
-      <div class="brand-mark">SJ</div>
-      <div class="brand-text">
-        <div class="eyebrow">Setjen DPR RI</div>
-        <h1>Bagian Pembinaan Jabatan Fungsional</h1>
-      </div>
+      <div class="mark" aria-hidden="true">SJ</div>
+      <div><b>Bagian Pembinaan Jabatan Fungsional</b><small>Sekretariat Jenderal DPR RI</small></div>
     </div>
-    <div style="display:flex; align-items:center; gap:14px;">
-      <a href="https://script.google.com/macros/s/AKfycbyLIgDWRFW7DSBUXQ3puBHmt6XYzFUVfcbCt07D5lfAbPUzeP4rAw_rzPnqPzW_6rp8XQ/exec" target="_blank" class="guide-link">📖 Panduan Penggunaan</a>
-      <div class="status-pill"><span class="blip"></span><span id="svc-count-label">ALAT KERJA AKTIF</span></div>
+    <nav aria-label="Pintasan">
+      <a class="pill-link" id="guideLink" href="https://script.google.com/macros/s/AKfycbyLIgDWRFW7DSBUXQ3puBHmt6XYzFUVfcbCt07D5lfAbPUzeP4rAw_rzPnqPzW_6rp8XQ/exec" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H12v16H5.5A1.5 1.5 0 0 1 4 18.5z"/><path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H12v16h6.5a1.5 1.5 0 0 0 1.5-1.5z"/></svg><span>Panduan penggunaan</span>
+      </a>
+      <button class="icon-btn" id="themeBtn" aria-label="Ganti tema terang atau gelap" title="Ganti tema">
+        <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></svg>
+      </button>
+    </nav>
+  </header>
+
+  <section class="hero" aria-labelledby="h1">
+    <h1 id="h1">Alat kerja pembinaan jabatan fungsional, dalam satu tempat</h1>
+    <p class="lead">Cari alat yang Anda butuhkan, atau jelajahi menurut kelompoknya. Alat bertanda gembok memerlukan login.</p>
+    <div class="finder">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input id="q" type="search" autocomplete="off" spellcheck="false" placeholder="Cari: nomor PAK, sertifikat, jadwal kunjungan" aria-label="Cari alat kerja">
+      <span class="keys" aria-hidden="true"><kbd>Ctrl</kbd><kbd>K</kbd></span>
     </div>
+    <div class="ideas" id="ideas"><span>Coba:</span></div>
+  </section>
+
+  <div class="controls">
+    <div class="seg" role="group" aria-label="Filter akses" id="seg"></div>
+    <div class="chips" role="group" aria-label="Filter kelompok" id="chips"></div>
   </div>
 
-  <div class="hero">
-    <div class="eyebrow">⬡ Portal Terintegrasi · Bagian Pembinaan Jabatan Fungsional</div>
-    <h2>Bekerja lebih <span class="accent">smart</span>, <span class="accent">efisien</span>, dan <span class="accent">cepat</span></h2>
-    <p>Kumpulan alat kerja digital Bagian Pembinaan Jabatan Fungsional, dari satu titik akses — terus bertambah dari waktu ke waktu, tanpa perlu lagi bolak-balik buka banyak aplikasi terpisah.</p>
-
-    <svg class="network" viewBox="0 0 640 90" xmlns="http://www.w3.org/2000/svg">
-      <line x1="60" y1="45" x2="200" y2="20"/>
-      <line x1="60" y1="45" x2="200" y2="70"/>
-      <line x1="200" y1="20" x2="340" y2="45"/>
-      <line x1="200" y1="70" x2="340" y2="45"/>
-      <line x1="340" y1="45" x2="480" y2="20"/>
-      <line x1="340" y1="45" x2="480" y2="70"/>
-      <line x1="480" y1="20" x2="580" y2="45"/>
-      <line x1="480" y1="70" x2="580" y2="45"/>
-      <circle class="pulse" cx="60" cy="45" r="3"/>
-      <circle class="pulse" cx="200" cy="20" r="3" style="animation-delay:.3s"/>
-      <circle class="pulse" cx="200" cy="70" r="3" style="animation-delay:.6s"/>
-      <circle class="pulse" cx="340" cy="45" r="3" style="animation-delay:.2s"/>
-      <circle class="pulse" cx="480" cy="20" r="3" style="animation-delay:.5s"/>
-      <circle class="pulse" cx="480" cy="70" r="3" style="animation-delay:.8s"/>
-      <circle class="pulse" cx="580" cy="45" r="3" style="animation-delay:.4s"/>
-    </svg>
-  </div>
-
-  <div class="svc-row" id="svc-row"></div>
+  <main class="split">
+    <div id="listWrap" aria-live="polite"></div>
+    <aside class="preview" id="preview" aria-label="Pratinjau alat"></aside>
+  </main>
 
   <footer>
-    <div class="mono">© 2026 · Bagian Pembinaan Jabatan Fungsional · Sekretariat Jenderal DPR RI</div>
+    <span id="foot"></span>
+    <span>Ctrl K untuk mencari, panah atas dan bawah untuk memilih, Enter untuk membuka</span>
   </footer>
 </div>
 
-<div class="modal-overlay" id="modal-login">
-  <div class="modal-box">
-    <div class="modal-eyebrow">⬡ Akses Terbatas</div>
-    <h4 id="login-title">Login diperlukan</h4>
-    <p class="modal-desc" id="login-desc">Alat kerja ini hanya bisa diakses oleh admin/petugas terdaftar. Masukkan username dan password.</p>
-    <div class="modal-field">
-      <label>Username</label>
-      <input id="login-user" type="text" placeholder="Username" autocomplete="username">
-    </div>
-    <div class="modal-field">
-      <label>Password</label>
-      <input id="login-pass" type="password" placeholder="Password" autocomplete="current-password" onkeydown="if(event.key==='Enter') submitLogin();">
-      <div class="modal-err" id="login-err">Username atau password salah.</div>
-    </div>
-    <div class="modal-actions">
-      <button class="modal-btn modal-btn-ghost" onclick="closeLoginModal()">Batal</button>
-      <button class="modal-btn modal-btn-primary" id="login-submit" onclick="submitLogin()">Masuk</button>
-    </div>
-  </div>
+<div class="scrim" id="scrim" role="dialog" aria-modal="true" aria-labelledby="mt">
+  <form class="modal" id="loginForm" autocomplete="off">
+    <h2 id="mt">Masuk untuk membuka alat</h2>
+    <p id="mp">Alat ini hanya untuk admin dan petugas terdaftar.</p>
+    <div class="f"><label for="u">Username</label><input id="u" autocomplete="username"></div>
+    <div class="f"><label for="p">Kata sandi</label><input id="p" type="password" autocomplete="current-password"></div>
+    <div class="err" id="err" role="alert">Username atau kata sandi salah. Periksa lalu coba lagi.</div>
+    <div class="mbtn"><button type="button" class="ghost" id="cancel">Batal</button><button type="submit" class="go">Masuk dan buka</button></div>
+  </form>
 </div>
-
-<div class="toast" id="toast"><span class="dot"></span><span id="toast-text">Membuka layanan...</span></div>
+<div class="toast" id="toast" role="status"></div>
 
 <script>
 /* ============================================================
-   DAFTAR LAYANAN — edit di sini kalau ada perubahan/tambahan URL
+   DAFTAR ALAT: ubah di sini bila ada alat baru atau tautan berubah.
+   protected:true -> perlu login portal sebelum tautan dibuka.
 ============================================================ */
-const SERVICES = [
-  {
-    kode: 'SVC-01 · FORMASI',
-    title: 'Usulan Formasi',
-    desc: 'Ajukan dan pantau usulan formasi jabatan fungsional untuk unit kerja Anda secara real-time.',
-    url: 'https://script.google.com/macros/s/AKfycby147lZQ49keIp3on0YTe0e9-pz4jT6m2zFzfVSvTv50Ulv8JlvDoCGs4QwzfroxzGq/exec',
-    protected: true,
-    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="#3fd6ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="10" width="4" height="10"/><rect x="10" y="5" width="4" height="15"/><rect x="17" y="13" width="4" height="7"/></svg>'
-  },
-  {
-    kode: 'SVC-02 · PAK',
-    title: 'Ambil Nomor PAK',
-    desc: 'Ambil nomor Penetapan Angka Kredit (PAK) resmi secara mandiri, tanpa perlu login.',
-    url: 'https://script.google.com/macros/s/AKfycbxzS3xyVSWnHDq9QB6jwLx3opRD_rJjbfC1KM6LTsELmscxcPqCVJxj_F2G7QKeo18M/exec',
-    protected: false,
-    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="#3fd6ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M8.5 12.5l2.3 2.3L15.7 9.6"/></svg>'
-  },
-  {
-    kode: 'SVC-03 · KINERJA',
-    title: 'Manajemen Kinerja Unit',
-    desc: 'Kelola dan pantau capaian kinerja unit kerja secara berkala dan terintegrasi.',
-    url: 'https://script.google.com/macros/s/AKfycbwUDR1_b86lTq6UBJnzYdbKgzMOVbObbLjPeN_-60agEbTFW6e10SFzBehdyZgr1rrI/exec',
-    protected: true,
-    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="#3fd6ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 15l3.5-4 3 2.5L19 8"/></svg>'
-  },
-  {
-    kode: 'SVC-04 · SURAT',
-    title: 'Sistem Penomoran Surat',
-    desc: 'Kelola dan ambil nomor surat resmi untuk kebutuhan administrasi Bagian Pembinaan Jabatan Fungsional.',
-    url: 'https://script.google.com/macros/s/AKfycbw_ZG1lCs5kUx0110qA2ERC2bdZo3vTx2Cz5179fXJZVGGn1VvyFvVkad2Cdher79RGEQ/exec',
-    protected: true,
-    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="#3fd6ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v5h5"/><path d="M8 13h8"/><path d="M8 17h5"/></svg>'
-  },
-  {
-    kode: 'SVC-05 · KALKULATOR AK',
-    title: 'Kalkulator Angka Kredit',
-    desc: 'Hitung otomatis kebutuhan angka kredit untuk kenaikan pangkat atau kenaikan jenjang jabatan fungsional.',
-    url: 'https://whisnuelianto.github.io/kalkulator-ak/',
-    protected: false,
-    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="#3fd6ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8"/><circle cx="8" cy="11" r="1"/><circle cx="12" cy="11" r="1"/><circle cx="16" cy="11" r="1"/><circle cx="8" cy="15" r="1"/><circle cx="12" cy="15" r="1"/><circle cx="16" cy="15" r="1"/><circle cx="8" cy="19" r="1"/><circle cx="12" cy="19" r="1"/><circle cx="16" cy="19" r="1"/></svg>'
-  },
-  {
-    kode: 'SVC-06 · TIMER UJIKOM',
-    title: 'Timer Pelaksanaan Uji Kompetensi',
-    desc: 'Pengatur waktu untuk memandu jalannya pelaksanaan uji kompetensi jabatan fungsional.',
-    url: 'https://whisnuelianto.github.io/Timer-Ujikom/timer_ujikom_remote.html',
-    protected: false,
-    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="#3fd6ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2"/><path d="M9 2h6"/><path d="M12 2v3"/></svg>'
-  },
-  {
-    kode: 'SVC-07 · VERIFIKASI UJIKOM',
-    title: 'Verifikasi Uji Kompetensi',
-    desc: 'Proses verifikasi uji kompetensi dilakukan secara digital dan lebih terkelola dengan smart.',
-    url: 'https://verifikasi-ujikom.web.app/',
-    protected: true,
-    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="#3fd6ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>'
-  },
-  {
-    kode: 'SVC-08 · KEGIATAN JF',
-    title: 'Kegiatan Bagian Pembinaan JF',
-    desc: 'Informasi kegiatan yang sedang aktif — sosialisasi, workshop, bimtek, dsb — lengkap dengan materi, link Zoom, dan absensi.',
-    url: 'https://kegiatan-jabfung.web.app',
-    protected: false,
-    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="#3fd6ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M8 3v4"/><path d="M16 3v4"/><path d="M8 13h3"/><path d="M8 17h5"/></svg>'
-  },
-  {
-    kode: 'SVC-09 · GENERATOR DOKUMEN',
-    title: 'Generator Sertifikat & Dokumen',
-    desc: 'Bikin sertifikat, surat rekomendasi, dan dokumen lain secara otomatis — mempermudah staf mengolah data dalam jumlah banyak.',
-    url: 'https://script.google.com/macros/s/AKfycbzkiUuz9UY-qLhUpYbKDBThWITlYACetEWlOTDFVK3-QFKlZzes309JZY5t3lcllwER/exec',
-    protected: true,
-    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="#3fd6ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3h8l4 4v13a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M16 3v4h4"/><circle cx="12" cy="14" r="2.4"/><path d="M10.5 16.2L9.5 20l2.5-1.2L14.5 20l-1-3.8"/></svg>'
-  },
-  {
-    kode: 'SVC-10 · PIC',
-    title: 'Daftar PIC (Person in Charge)',
-    desc: 'Informasi penanggung jawab (PIC) untuk setiap layanan/kegiatan di Bagian Pembinaan Jabatan Fungsional.',
-    url: 'https://whisnuelianto.github.io/PIC/',
-    protected: false,
-    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="#3fd6ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20c0-3.3 2.5-5.5 5.5-5.5s5.5 2.2 5.5 5.5"/><circle cx="17" cy="8" r="2.2"/><path d="M15.5 14.8c2.2.4 3.5 2.1 3.5 4.7"/></svg>'
-  },
-  {
-    kode: 'SVC-11 · MONITORING JF',
-    title: 'Monitoring JF Setjen DPR RI',
-    desc: 'Pantau data dan status jabatan fungsional di lingkungan Setjen DPR RI secara terpusat.',
-    url: 'https://script.google.com/macros/s/AKfycbwO9dQ2Uz6QdTrfWZQbRnwfzdUlzg9JRVZD-6wOMAVUHGIqEvf3tSOXViRRsx65pFE/exec',
-    protected: true,
-    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="#3fd6ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/><path d="M8 11h6"/><path d="M11 8v6"/></svg>'
-  },
-  {
-    kode: 'SVC-12 · KAPSUL PENGETAHUAN',
-    title: 'Kapsul Pengetahuan JF',
-    desc: 'Database pengetahuan untuk bertanya dan mencari jawaban seputar pengelolaan jabatan fungsional.',
-    url: 'https://jabfung.kapsulpengetahuan.space/',
-    protected: false,
-    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="#3fd6ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg>'
-  },
-  {
-    kode: 'SVC-13 · SIJAKU',
-    title: 'Sistem Jadwal Kunjungan (SIJAKU)',
-    desc: 'Lihat jadwal yang tersedia dan ajukan kunjungan DPRD daerah ke Bagian Pembinaan Jabatan Fungsional, lengkap dengan status verifikasinya.',
-    url: 'https://script.google.com/macros/s/AKfycbyQwsf2LJSmvUrnHKSxuMBMw67DkPMl-P1_1sbIlYFYajpclDdyQ9-xUf2VuhUAk-Hr/exec',
-    protected: false,
-    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="#3fd6ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/><path d="M9 15l2 2 4-4"/></svg>'
-  }
+var PILLARS = {
+  karier:{name:'Layanan JF dan karier',c:'var(--c-karier)'},
+  ujikom:{name:'Uji kompetensi',c:'var(--c-ujikom)'},
+  admin:{name:'Administrasi dan dokumen',c:'var(--c-admin)'},
+  kolab:{name:'Kolaborasi, pengetahuan, dan daerah',c:'var(--c-kolab)'}
+};
+var SERVICES = [
+ {id:'formasi',pillar:'karier',icon:'bars',title:'Usulan Formasi',short:'Verifikasi usulan formasi Perisalah dan Asisten Perisalah',desc:'Verifikasi usulan formasi JF Perisalah dan Asisten Perisalah Legislatif: hitung ulang kebutuhan, cek kelengkapan bukti, lalu buat dokumen rekomendasi.',who:'Admin verifikator dan instansi pengusul',url:'https://script.google.com/macros/s/AKfycby147lZQ49keIp3on0YTe0e9-pz4jT6m2zFzfVSvTv50Ulv8JlvDoCGs4QwzfroxzGq/exec',protected:true,kata:'formasi usulan perisalah verifikasi kebutuhan rekomendasi proyeksi instansi'},
+ {id:'pak',pillar:'karier',icon:'check',title:'Ambil Nomor PAK',short:'Nomor PAK resmi, urut otomatis, NIP diverifikasi',desc:'Ambil nomor Penetapan Angka Kredit secara mandiri. Nomor urut berjalan otomatis, NIP dicocokkan dengan data pegawai, dan bukti angka kredit bisa diunggah.',who:'Pejabat fungsional di Setjen DPR RI dan di luar Setjen',url:'https://script.google.com/macros/s/AKfycbxzS3xyVSWnHDq9QB6jwLx3opRD_rJjbfC1KM6LTsELmscxcPqCVJxj_F2G7QKeo18M/exec',protected:false,kata:'pak nomor penetapan angka kredit nip kenaikan pangkat jenjang'},
+ {id:'kalkulator',pillar:'karier',icon:'calc',title:'Kalkulator Angka Kredit',short:'Hitung kebutuhan angka kredit, dibantu AI',desc:'Hitung kebutuhan angka kredit untuk kenaikan pangkat atau jenjang. Ada fitur opsional untuk mengisi data dari deskripsi dengan bantuan AI.',who:'Pejabat fungsional dan admin',url:'https://whisnuelianto.github.io/kalkulator-ak/',protected:false,kata:'kalkulator hitung angka kredit ak pangkat jenjang konversi skp'},
+ {id:'monitoring',pillar:'karier',icon:'eye',title:'Monitoring JF Setjen',short:'Pantau data dan proyeksi karier JF',desc:'Pantau data pegawai JF di lingkungan Setjen DPR RI: ringkasan menurut jabatan, jenjang, dan unit, riwayat angka kredit, serta kalender proyeksi karier.',who:'Admin dan pembina',url:'https://script.google.com/macros/s/AKfycbwO9dQ2Uz6QdTrfWZQbRnwfzdUlzg9JRVZD-6wOMAVUHGIqEvf3tSOXViRRsx65pFE/exec',protected:true,kata:'monitoring pantau pegawai proyeksi karier kalender data jf setjen'},
+ {id:'timer',pillar:'ujikom',icon:'clock',title:'Timer Pelaksanaan Uji Kompetensi',short:'Pengatur waktu ujikom yang dikendalikan panitia',desc:'Pengatur waktu pelaksanaan uji kompetensi. Panitia mengontrol dari perangkatnya, peserta melihat timer di layar depan lewat kode ruangan.',who:'Panitia dan peserta',url:'https://whisnuelianto.github.io/Timer-Ujikom/timer_ujikom_remote.html',protected:false,kata:'timer waktu uji kompetensi ujikom ruangan panitia peserta'},
+ {id:'verifikasi',pillar:'ujikom',icon:'shield',title:'Verifikasi Uji Kompetensi',short:'Verifikasi berkas ujikom secara digital',desc:'Verifikasi berkas peserta uji kompetensi secara digital, dengan penugasan verifikator per rumpun jabatan, dasbor, dan sinkron langsung antar perangkat.',who:'Admin dan verifikator',url:'https://verifikasi-ujikom.web.app/',protected:true,kata:'verifikasi berkas peserta uji kompetensi ujikom verifikator rumpun'},
+ {id:'surat',pillar:'admin',icon:'file',title:'Penomoran Surat',short:'Nomor surat resmi bagian, tertib dan tercatat',desc:'Ambil nomor surat resmi bagian dengan pratinjau nomor. Surat susulan bertanggal lampau mendapat akhiran huruf, dan surat bertanda tangan bisa diunggah.',who:'Staf bagian dan admin',url:'https://script.google.com/macros/s/AKfycbw_ZG1lCs5kUx0110qA2ERC2bdZo3vTx2Cz5179fXJZVGGn1VvyFvVkad2Cdher79RGEQ/exec',protected:true,kata:'surat nomor penomoran kode klasifikasi tujuan staf riwayat'},
+ {id:'generator',pillar:'admin',icon:'award',title:'Generator Sertifikat dan Dokumen',short:'Sertifikat dan rekomendasi massal dari data',desc:'Buat sertifikat, surat rekomendasi, dan dokumen lain dari data dalam jumlah banyak. Hasilnya berupa dokumen yang masih bisa diedit.',who:'Admin dan staf',url:'https://script.google.com/macros/s/AKfycbzkiUuz9UY-qLhUpYbKDBThWITlYACetEWlOTDFVK3-QFKlZzes309JZY5t3lcllwER/exec',protected:true,kata:'sertifikat rekomendasi dokumen massal generator template peserta'},
+ {id:'kinerja',pillar:'admin',icon:'board',title:'Manajemen Kinerja Unit',short:'Papan tugas tim dan dasbor pimpinan',desc:'Papan tugas tim dengan status, prioritas, tenggat, pengingat email, laporan bulanan, dan dasbor khusus pimpinan.',who:'Staf, admin, dan pimpinan',url:'https://script.google.com/macros/s/AKfycbwUDR1_b86lTq6UBJnzYdbKgzMOVbObbLjPeN_-60agEbTFW6e10SFzBehdyZgr1rrI/exec',protected:true,kata:'kinerja tugas papan tugas tenggat pimpinan beban kerja tim'},
+ {id:'kegiatan',pillar:'kolab',icon:'cal',title:'Kegiatan Bagian Pembinaan JF',short:'Materi, tautan Zoom, formulir, dan presensi',desc:'Informasi kegiatan yang sedang aktif seperti sosialisasi, workshop, dan bimtek, lengkap dengan materi, tautan Zoom, formulir, dan presensi.',who:'Peserta kegiatan dan admin',url:'https://kegiatan-jabfung.web.app',protected:false,kata:'kegiatan sosialisasi workshop bimtek zoom materi presensi formulir'},
+ {id:'pic',pillar:'kolab',icon:'users',title:'Daftar PIC',short:'Cari penanggung jawab layanan dan kegiatan',desc:'Direktori penanggung jawab (PIC) layanan dan kegiatan, dengan foto, filter bidang, dan tombol WhatsApp.',who:'Seluruh pegawai dan daerah',url:'https://whisnuelianto.github.io/PIC/',protected:false,kata:'pic penanggung jawab kontak whatsapp direktori bidang'},
+ {id:'kapsul',pillar:'kolab',icon:'bulb',title:'Kapsul Pengetahuan',short:'Tanya jawab pengelolaan JF berbasis AI',desc:'Tanyakan seputar pengelolaan jabatan fungsional. Jawaban dicari dari dokumen resmi yang diunggah admin, dan perlu diperiksa ke sumber aslinya.',who:'Pegawai, DPRD, dan admin',url:'https://jabfung.kapsulpengetahuan.space/',protected:false,kata:'kapsul pengetahuan tanya jawab ai pertanyaan aturan dokumen bantuan'},
+ {id:'sijaku',pillar:'kolab',icon:'calcheck',title:'SIJAKU, jadwal kunjungan DPRD',short:'Lihat jadwal dan ajukan kunjungan ke bagian',desc:'Lihat jadwal yang tersedia dan ajukan kunjungan DPRD daerah ke Bagian Pembinaan Jabatan Fungsional, lengkap dengan status verifikasinya.',who:'DPRD daerah dan admin',url:'https://script.google.com/macros/s/AKfycbyQwsf2LJSmvUrnHKSxuMBMw67DkPMl-P1_1sbIlYFYajpclDdyQ9-xUf2VuhUAk-Hr/exec',protected:false,kata:'sijaku jadwal kunjungan dprd daerah booking kalender pengajuan'}
 ];
+// Isi bila Dokumen Induk sudah punya alamat tetap; kosong = tautan disembunyikan.
+var DOKUMEN_INDUK_URL = '';
 
-let unlocked = false;
-let pendingServiceIndex = null;
+/* kredensial portal dicek di peramban: pembatas ringan, bukan keamanan tingkat tinggi */
+var PORTAL_USERNAME = 'binajabfung';
+var PORTAL_PASSWORD = 'dprjayatigakali123';
 
-function renderServices(){
-  const countLabel = document.getElementById('svc-count-label');
-  if(countLabel) countLabel.textContent = SERVICES.length + ' ALAT KERJA AKTIF';
-  const row = document.getElementById('svc-row');
-  row.innerHTML = SERVICES.map(function(s, i){
-    const statusHtml = s.protected
-      ? '<span class="svc-lock">&#128274; PERLU LOGIN</span>'
-      : '<span class="svc-status"><span class="blip"></span>PUBLIK</span>';
-    return '' +
-      '<button class="svc-card" onclick="openService(' + i + ')" aria-label="Buka ' + s.title + '">' +
-        '<div class="svc-top">' +
-          '<div class="svc-icon">' + s.icon + '</div>' +
-          '<div class="svc-code">' + s.kode + '</div>' +
-        '</div>' +
-        '<div class="svc-body">' +
-          '<div class="svc-title">' + s.title + '</div>' +
-          '<div class="svc-desc">' + s.desc + '</div>' +
-        '</div>' +
-        '<div class="svc-foot">' +
-          statusHtml +
-          '<span class="svc-cta">Buka <span class="arrow">&rarr;</span></span>' +
-        '</div>' +
-      '</button>';
-  }).join('');
+var ICON = {
+ bars:'<rect x="3" y="11" width="4" height="9" rx="1"/><rect x="10" y="5" width="4" height="15" rx="1"/><rect x="17" y="13" width="4" height="7" rx="1"/>',
+ check:'<circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.4 2.4 4.6-5"/>',
+ calc:'<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8.5 7h7"/><path d="M8.5 11.5h.01M12 11.5h.01M15.5 11.5h.01M8.5 15.5h.01M12 15.5h.01M15.5 15.5h.01"/>',
+ eye:'<path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+ clock:'<circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/>',
+ shield:'<path d="M12 3l8 3v6c0 4.5-3.2 7.8-8 9.5C7.2 19.8 4 16.5 4 12V6z"/><path d="M8.5 12l2.4 2.4 4.6-5"/>',
+ file:'<path d="M6 3h8l4 4v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v5h5M8.5 13h7M8.5 17h4"/>',
+ award:'<circle cx="12" cy="9" r="5.5"/><path d="M8.8 13.5L7.5 21l4.5-2.3 4.5 2.3-1.3-7.5"/>',
+ board:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16M15 4v16M5.5 8h1M11.5 8h1M17.5 8h1"/>',
+ cal:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+ users:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-5.8 6.5-5.8s6.5 2.2 6.5 5.8"/><circle cx="17.5" cy="9" r="2.5"/><path d="M16.5 14.5c2.7.2 4.5 1.9 4.5 4.8"/>',
+ bulb:'<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.5 1.1 1.3 1.1 2.2h5c0-.9.4-1.7 1.1-2.2A6 6 0 0 0 12 3z"/>',
+ calcheck:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M9 15l2 2 4-4"/>',
+ globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/>',
+ lock:'<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
+ star:'<path d="M12 3.5l2.7 5.5 6 .9-4.4 4.2 1 6-5.3-2.8-5.3 2.8 1-6L3.3 9.9l6-.9z"/>',
+ out:'<path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/>',
+ sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+ moon:'<path d="M20 14.5A8 8 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5z"/>'
+};
+function svg(n,extra){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" '+(extra||'')+'>'+ICON[n]+'</svg>';}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function $(s){return document.querySelector(s);}
+
+var state={q:'',access:'all',pillar:'all',sel:null,pins:[],unlocked:false,pending:null,entered:false};
+try{state.pins=JSON.parse(localStorage.getItem('pjf-pins')||'[]');}catch(e){state.pins=[];}
+function savePins(){try{localStorage.setItem('pjf-pins',JSON.stringify(state.pins));}catch(e){}}
+var narrow=matchMedia('(max-width: 900px)');
+
+function norm(s){return String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
+function matches(s){
+  if(state.access==='public'&&s.protected)return false;
+  if(state.access==='login'&&!s.protected)return false;
+  if(state.pillar!=='all'&&s.pillar!==state.pillar)return false;
+  if(!state.q.trim())return true;
+  var hay=norm([s.title,s.short,s.desc,s.who,s.kata,PILLARS[s.pillar].name].join(' '));
+  return norm(state.q).split(/\s+/).filter(Boolean).every(function(w){return hay.indexOf(w)>-1;});
+}
+function visibleList(){
+  var items=SERVICES.filter(matches);
+  var pinned=items.filter(function(s){return state.pins.indexOf(s.id)>-1;});
+  var rest=items.filter(function(s){return state.pins.indexOf(s.id)<0;});
+  var groups=[];
+  if(pinned.length)groups.push({key:'pin',name:'Disematkan',items:pinned});
+  Object.keys(PILLARS).forEach(function(k){
+    var g=rest.filter(function(s){return s.pillar===k;});
+    if(g.length)groups.push({key:k,name:PILLARS[k].name,items:g});
+  });
+  return groups;
+}
+function flat(groups){var a=[];groups.forEach(function(g){g.items.forEach(function(s){a.push(s);});});return a;}
+function byId(id){return SERVICES.filter(function(s){return s.id===id;})[0];}
+
+function renderControls(){
+  var pub=SERVICES.filter(function(s){return !s.protected;}).length,lg=SERVICES.length-pub;
+  var segs=[['all','Semua ('+SERVICES.length+')'],['public','Publik ('+pub+')'],['login','Perlu login ('+lg+')']];
+  $('#seg').innerHTML=segs.map(function(x){return '<button type="button" data-a="'+x[0]+'" aria-pressed="'+(state.access===x[0])+'">'+x[1]+'</button>';}).join('');
+  var ch='<button type="button" class="chip" data-p="all" aria-pressed="'+(state.pillar==='all')+'">Semua kelompok</button>';
+  Object.keys(PILLARS).forEach(function(k){ch+='<button type="button" class="chip" style="--pc:'+PILLARS[k].c+'" data-p="'+k+'" aria-pressed="'+(state.pillar===k)+'"><i></i>'+esc(PILLARS[k].name)+'</button>';});
+  $('#chips').innerHTML=ch;
+  $('#foot').textContent=SERVICES.length+' alat bantu dalam 4 kelompok, '+pub+' terbuka untuk umum dan '+lg+' perlu login';
 }
 
-function openService(i){
-  const s = SERVICES[i];
-  if(s.protected && !unlocked){
-    pendingServiceIndex = i;
-    document.getElementById('login-title').textContent = 'Login untuk ' + s.title;
-    document.getElementById('login-desc').textContent = 'Alat kerja "' + s.title + '" hanya bisa diakses oleh admin/petugas terdaftar. Masukkan username dan password.';
-    document.getElementById('login-err').style.display = 'none';
-    document.getElementById('login-user').value = '';
-    document.getElementById('login-pass').value = '';
-    document.getElementById('modal-login').classList.add('show');
-    setTimeout(function(){ document.getElementById('login-user').focus(); }, 100);
-    return;
+function renderList(){
+  var groups=visibleList(),items=flat(groups),wrap=$('#listWrap');
+  if(!items.length){
+    wrap.innerHTML='<div class="empty"><b>Tidak ada alat yang cocok</b><p>Tidak ada hasil untuk '+(state.q?'“'+esc(state.q)+'”':'filter ini')+'. Coba kata lain, misalnya nomor, sertifikat, atau jadwal.</p><button type="button" class="ghost" id="reset">Tampilkan semua alat</button></div>';
+    $('#preview').innerHTML='';
+    state.sel=null;return;
   }
-  showToast('> Membuka ' + s.title + '...');
-  window.open(s.url, '_blank');
+  if(!items.some(function(s){return s.id===state.sel;}))state.sel=narrow.matches?null:items[0].id;
+  var i=0,html='';
+  groups.forEach(function(g){
+    html+='<section><h2 class="grp">'+esc(g.name)+'<span>'+g.items.length+' alat</span></h2><ul>';
+    g.items.forEach(function(s){
+      var pinned=state.pins.indexOf(s.id)>-1;
+      html+='<li><div class="row" style="--pc:'+PILLARS[s.pillar].c+';--i:'+(i++)+'" data-id="'+s.id+'" aria-selected="'+(s.id===state.sel)+'">'+
+        '<span class="ico" aria-hidden="true">'+svg(s.icon)+'</span>'+
+        '<button type="button" class="open" data-open="'+s.id+'" aria-label="'+esc(s.title)+', '+(s.protected?'perlu login':'publik')+'"><span class="t">'+esc(s.title)+'</span><span class="s">'+esc(s.short)+'</span></button>'+
+        '<span class="acc" title="'+(s.protected?'Perlu login':'Terbuka untuk umum')+'">'+svg(s.protected?'lock':'globe')+'<span>'+(s.protected?'Perlu login':'Publik')+'</span></span>'+
+        '<button type="button" class="pin" data-pin="'+s.id+'" aria-pressed="'+pinned+'" aria-label="'+(pinned?'Lepas sematan ':'Sematkan ')+esc(s.title)+'" title="'+(pinned?'Lepas sematan':'Sematkan di atas')+'">'+svg('star')+'</button>'+
+        '<div class="detail">'+esc(s.desc)+'<br><button type="button" class="go" data-go="'+s.id+'">Buka alat '+svg('out')+'</button></div>'+
+      '</div></li>';
+    });
+    html+='</ul></section>';
+  });
+  wrap.innerHTML=html;
+  if(!state.entered){wrap.classList.add('enter');state.entered=true;setTimeout(function(){wrap.classList.remove('enter');},1400);}
+  renderPreview(false);
 }
 
-function closeLoginModal(){
-  document.getElementById('modal-login').classList.remove('show');
-  pendingServiceIndex = null;
+function renderPreview(animate){
+  var s=byId(state.sel),box=$('#preview');
+  if(!s){box.innerHTML='';return;}
+  var pinned=state.pins.indexOf(s.id)>-1;
+  box.style.setProperty('--pc',PILLARS[s.pillar].c);
+  box.innerHTML='<div class="'+(animate?'swap':'')+'">'+
+    '<div class="pv-ico" aria-hidden="true">'+svg(s.icon)+'</div>'+
+    '<div class="pv-grp">'+esc(PILLARS[s.pillar].name)+'</div>'+
+    '<div class="pv-t">'+esc(s.title)+'</div>'+
+    '<p class="pv-d">'+esc(s.desc)+'</p>'+
+    '<dl class="pv"><dt>Untuk</dt><dd>'+esc(s.who)+'</dd><dt>Akses</dt><dd>'+(s.protected?'Perlu login portal sebelum dibuka':'Terbuka untuk siapa saja')+'</dd></dl>'+
+    '<div class="btns"><button type="button" class="go" data-go="'+s.id+'">Buka alat '+svg('out')+'</button>'+
+    '<button type="button" class="ghost" data-pin="'+s.id+'" aria-pressed="'+pinned+'">'+svg('star',pinned?'fill="currentColor"':'')+(pinned?'Disematkan':'Sematkan')+'</button></div></div>';
 }
 
-// Kredensial dicek langsung di browser (client-side), karena halaman ini
-// di-hosting sebagai situs statis (GitHub Pages), bukan lewat Apps Script,
-// jadi tidak bisa memanggil google.script.run. Ini tetap proteksi ringan
-// (bukan otentikasi tingkat tinggi) — siapapun yang buka "view source" bisa
-// melihat kredensial ini. Cukup untuk mencegah orang iseng, bukan untuk data sensitif.
-const PORTAL_USERNAME = 'binajabfung';
-const PORTAL_PASSWORD = 'dprjayatigakali123';
-
-function submitLogin(){
-  const user = document.getElementById('login-user').value.trim();
-  const pass = document.getElementById('login-pass').value;
-  const btn = document.getElementById('login-submit');
-  btn.disabled = true; btn.textContent = 'Memeriksa...';
-
-  setTimeout(function(){ // beri jeda kecil supaya terasa natural, bukan instan
-    btn.disabled = false; btn.textContent = 'Masuk';
-    const ok = (user === PORTAL_USERNAME && pass === PORTAL_PASSWORD);
-    if(ok){
-      unlocked = true;
-      document.getElementById('modal-login').classList.remove('show');
-      if(pendingServiceIndex !== null){
-        const s = SERVICES[pendingServiceIndex];
-        showToast('> Membuka ' + s.title + '...');
-        window.open(s.url, '_blank');
-        pendingServiceIndex = null;
-      }
-    } else {
-      document.getElementById('login-err').style.display = 'block';
-    }
-  }, 300);
+function select(id,animate){
+  if(state.sel===id)return;
+  state.sel=id;
+  document.querySelectorAll('.row').forEach(function(r){r.setAttribute('aria-selected',r.dataset.id===id);});
+  renderPreview(animate!==false);
+}
+function toast(m){var t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(function(){t.classList.remove('show');},2200);}
+function openTool(id){
+  var s=byId(id);if(!s)return;
+  if(s.protected&&!state.unlocked){showLogin(id);return;}
+  window.open(s.url,'_blank','noopener');
+  toast('Membuka '+s.title);
+}
+function togglePin(id){
+  var i=state.pins.indexOf(id);
+  if(i>-1){state.pins.splice(i,1);toast('Sematan dilepas');}else{state.pins.push(id);toast('Disematkan di bagian atas');}
+  savePins();renderList();
 }
 
-function showToast(msg){
-  const t = document.getElementById('toast');
-  document.getElementById('toast-text').textContent = msg;
-  t.classList.add('show');
-  clearTimeout(window._toastTimer);
-  window._toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 2200);
+/* login */
+var lastFocus=null;
+function showLogin(id){
+  var s=byId(id);state.pending=id;lastFocus=document.activeElement;
+  $('#mt').textContent='Masuk untuk membuka '+s.title;
+  $('#mp').textContent='Alat ini hanya untuk admin dan petugas terdaftar. Setelah masuk, alat berlogin lain di portal ini ikut terbuka.';
+  $('#err').classList.remove('show');$('#u').value='';$('#p').value='';
+  $('#scrim').classList.add('show');setTimeout(function(){$('#u').focus();},30);
 }
+function hideLogin(){$('#scrim').classList.remove('show');state.pending=null;if(lastFocus&&lastFocus.focus)lastFocus.focus();}
+$('#loginForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  if($('#u').value.trim()===PORTAL_USERNAME&&$('#p').value===PORTAL_PASSWORD){
+    state.unlocked=true;var id=state.pending;hideLogin();toast('Berhasil masuk');if(id)openTool(id);
+  }else{
+    var er=$('#err');er.classList.add('show');var m=$('.modal');m.classList.remove('shake');void m.offsetWidth;m.classList.add('shake');$('#p').select();
+  }
+});
+$('#cancel').addEventListener('click',hideLogin);
+$('#scrim').addEventListener('mousedown',function(e){if(e.target===this)hideLogin();});
 
-renderServices();
+/* events */
+$('#q').addEventListener('input',function(){state.q=this.value;renderList();});
+document.addEventListener('click',function(e){
+  var t=e.target.closest('[data-open],[data-go],[data-pin],[data-a],[data-p],[data-idea],#reset');if(!t)return;
+  if(t.dataset.open){var id=t.dataset.open;if(narrow.matches){state.sel=(state.sel===id?null:id);document.querySelectorAll('.row').forEach(function(r){r.setAttribute('aria-selected',r.dataset.id===state.sel);});}else openTool(id);}
+  else if(t.dataset.go)openTool(t.dataset.go);
+  else if(t.dataset.pin)togglePin(t.dataset.pin);
+  else if(t.dataset.a){state.access=t.dataset.a;renderControls();renderList();}
+  else if(t.dataset.p){state.pillar=t.dataset.p;renderControls();renderList();}
+  else if(t.dataset.idea){$('#q').value=t.dataset.idea;state.q=t.dataset.idea;renderList();$('#q').focus();}
+  else if(t.id==='reset'){state.q='';state.access='all';state.pillar='all';$('#q').value='';renderControls();renderList();}
+});
+document.addEventListener('mouseover',function(e){
+  if(narrow.matches)return;var r=e.target.closest('.row');if(r)select(r.dataset.id);
+});
+document.addEventListener('focusin',function(e){
+  if(narrow.matches)return;var r=e.target.closest('.row');if(r)select(r.dataset.id);
+});
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){if($('#scrim').classList.contains('show')){hideLogin();return;}if($('#q').value){$('#q').value='';state.q='';renderList();}return;}
+  if(($('#scrim').classList.contains('show')))return;
+  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();$('#q').focus();$('#q').select();return;}
+  var typing=/INPUT|TEXTAREA/.test(document.activeElement.tagName);
+  if(e.key==='/'&&!typing){e.preventDefault();$('#q').focus();return;}
+  if((e.key==='ArrowDown'||e.key==='ArrowUp')&&!narrow.matches){
+    var items=flat(visibleList());if(!items.length)return;
+    var i=items.findIndex(function(s){return s.id===state.sel;});
+    i=e.key==='ArrowDown'?Math.min(items.length-1,i+1):Math.max(0,i-1);
+    e.preventDefault();select(items[i].id);
+    var row=document.querySelector('.row[data-id="'+items[i].id+'"]');if(row)row.scrollIntoView({block:'nearest'});
+  }
+  if(e.key==='Enter'&&document.activeElement===$('#q')&&state.sel){e.preventDefault();openTool(state.sel);}
+});
+
+/* tema */
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme',t);
+  $('#themeIcon').innerHTML=ICON[t==='dark'?'sun':'moon'];
+  try{localStorage.setItem('pjf-theme',t);}catch(e){}
+}
+$('#themeBtn').addEventListener('click',function(){applyTheme(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark');});
+$('#themeIcon').innerHTML=ICON[document.documentElement.getAttribute('data-theme')==='dark'?'sun':'moon'];
+
+/* tautan dokumen induk (opsional) */
+if(DOKUMEN_INDUK_URL){
+  var a=document.createElement('a');a.className='pill-link';a.href=DOKUMEN_INDUK_URL;a.target='_blank';a.rel='noopener';a.innerHTML='<span>Dokumen induk</span>';
+  $('#guideLink').insertAdjacentElement('afterend',a);
+}
+/* saran pencarian */
+['nomor PAK','sertifikat','jadwal kunjungan','angka kredit','tanya jawab'].forEach(function(w){
+  var b=document.createElement('button');b.type='button';b.textContent=w;b.dataset.idea=w;$('#ideas').appendChild(b);
+});
+
+renderControls();renderList();
 </script>
 </body>
 </html>
